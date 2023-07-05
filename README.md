@@ -9,10 +9,7 @@ environmental covariates to environmental variance in realized growth
 rates, and how to compute contributions from demographic stochasticity,
 for an integrated population model. We will not cover implementation of
 integrated population models in detail, as there are several other
-sources available for this. We will also show only the key components of
-calculating contributions using code snippets. However, complete model
-code, including data, for fitting the wheatear IPM, and code for
-computing all contributions is available in Supplement 1.
+sources available for this.
 
 All code below will be based on MCMC chains from NIMBLE, but the
 tutorial should be useful for IPMs coded in other Bayesian modelling
@@ -52,7 +49,7 @@ In the BUGS code, we collect all the linear predictor components for
 each age and time step into a three dimensional array indexed by time,
 age, and the predictor component (the dimension in this case is 26 x 2 X
 3). This is done by the following lines in the BUGS model code (see file
-`script.r` in Supplement 1):
+`script.r`):
 
       # Probability of nest (=breeding attempt) surviving until age of ringing (nu).
       for (yr in 1:nYears) {
@@ -98,7 +95,7 @@ function.
 
 Each row of the `samples` matrix contains a draw from the posterior
 distribution of the IPM. We will define an R function, `contrib` (see
-file `contrib.r` in Supplement 1), that computes the contributions for a
+file `contrib.r`), that computes the contributions for a
 single set of parameters, in other words for a single row of the
 `samples` matrix. The first row of the function therefore is:
 
@@ -158,7 +155,7 @@ rows (years, 25 time steps in our case).
       lpc.omega2 = lpc.omega[,2, drop = FALSE]; colnames(lpc.omega2) = paste0('omega2.', omeganames)
       stopifnot(sum(grepl('lpc.omega', parNames)) ==  length(lpc.omega1) + length(lpc.omega2))
 
-The formula for computing the contributions in the main text is:
+The formula for computing the contributions in the paper is:
 contribution(*θ*) := ∇*f*<sub>*θ̄*</sub> ∘ *Σ*<sub>*θ*</sub> ∇*f*<sub>*θ̄*</sub>
 where (∇*f*)<sub>*θ̄*</sub> is the gradient of the realized growth rate
 as a function of all the linear predictor components, evaluated at the
@@ -216,7 +213,7 @@ differentiation software, e.g. using the function `D` in R.
 
 To illustrate, we show how to compute the derivative of the realized
 growth rate with respect to the linear predictor of first year survival.
-The realized growth rate of the model in the main text, omitting
+The realized growth rate of the model in the paper, omitting
 subscripts for time is:
 *λ* = (*ν*<sub>1</sub>*r**ψ**ζ**ϕ*<sub>0</sub>+*ω*<sub>1</sub>)*ñ*<sub>1</sub> + (*ν*<sub>2</sub>*r**ψ**ζ**ϕ*<sub>0</sub>+*ω*<sub>1</sub>)(1−*ñ*<sub>1</sub>) − (*ϕ*<sub>1</sub>+*ω*<sub>2</sub>)*ñ*<sub>1</sub> − (*ϕ*<sub>2</sub>+*ω*<sub>2</sub>)(1−*ñ*<sub>1</sub>)
 To take the derivative of this with respect to the linear predictor of
@@ -316,7 +313,7 @@ components using
 
     contributions = (M %*% grad) * (Sigma %*% (M %*% grad))
 
-which corresponds to the formula for *f* above and in the main text.
+which corresponds to the formula for *f* above and in the paper.
 
 The relative contributions are computed by dividing by the total
 contribution:
