@@ -768,7 +768,7 @@ but we add covariance terms between each environmental variable and
 <span class="math inline">\(\lambda^D\)</span>, and then compute
 relative contribution to the variance in <span class="math inline">\(\lambda\)</span>.</p>
 <pre class="r"><code># Compute contributions to overall (both demographic and environmental) variance in growth 
-contributions.overall = contributions + grad * apply(lpc.mat, 2, cov, y = lam.D)
+contributions.overall = contributions + (M %*% grad) * apply(lpc.mat, 2, cov, y = lam.D)
 rel.contrib.overall = contributions.overall / var(lam)</code></pre>
 <p>The covariance terms are necessary to make the sum of the relative
 contributions (approximately) equal to
