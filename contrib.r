@@ -124,7 +124,7 @@ contrib = function(pars) {
   lam = pars[startsWith(parNames, 'lam[')]
   
   # Compute contributions to overall (both demographic and environmental) variance in growth 
-  contributions.total = contributions + (M %*% grad) * apply(lpc.mat, 2, cov, y = lam.D) # A previsous version was missing the multiplication with M. Thanks to Beth Ross for spotting the error!
+  contributions.total = contributions + (M %*% grad) * apply(lpc.mat, 2, cov, y = lam.D) # A previous version was missing the multiplication with M. Thanks to Beth Ross for spotting the error!
   rel.contrib.total = contributions.total / var(lam)
   
   # Basic decomposition of lam.DD
